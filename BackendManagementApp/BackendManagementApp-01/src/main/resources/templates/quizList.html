@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <title>Student List</title>
+    <style>
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #4CAF50;
+            width: 100%;
+            margin-top: 200px;
+            box-sizing: border-box;
+        }
+
+        .connect-icons a {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: white;
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+
+        .details p {
+            margin: 5px 0;
+        }
+
+
+        nav {
+            font-family: Arial, sans-serif;
+            background-color: #3b3333; /* Midnight Blue */
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            height: 50px;
+        }
+
+        .navbar-brand {
+            font-size: 20px;
+            color: #ecf1ec; /* Clouds */
+            margin: 15px;
+        }
+
+        .navbar-tabs {
+            display: flex;
+            gap: 20px;
+
+            border-radius: 5px;
+
+        }
+
+        .navbar-tabs a {
+            color: white; /* Clouds */
+            text-decoration: none;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+        }
+
+        .company-name {
+            font-weight: bold;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        h2 {
+            margin-left: 20px;
+            color: #333;
+        }
+
+        table {
+            margin-left: 20px;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+
+
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            margin-left: 20px;
+            color: #008CBA;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .delete-btn {
+            background-color: #FF5733;
+            color: white;
+            font-size: 18px;
+            padding: 5px;
+            margin: 5px;
+        }
+        .update-btn{
+            background-color: #188500;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar-brand">
+        <span class="company-name">Amr Fawzi</span>
+    </div>
+    <div class="navbar-tabs">
+        <a th:href="@{/teachers/list}">Teachers</a>
+        <a th:href="@{/students/list}">Students</a>
+        <a th:href="@{/courses/list}">Courses</a>
+        <a th:href="@{/quizzes/list}">Quiz</a>
+
+    </div>
+</nav>
+
+
+
+<h2>Quizzes List</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Topic</th>
+        <th>Questions Num</th>
+        <th>Level</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Loop through students and display data -->
+    <tr th:each="quiz : ${quizzes}">
+        <td th:text="${quiz.id}"></td>
+        <td th:text="${quiz.title}"></td>
+        <td th:text="${quiz.topic}"></td>
+        <td th:text="${quiz.numberOfQuestions}"></td>
+        <td th:text="${quiz.difficultyLevel}"></td>
+
+
+        <!-- Add Update and Delete buttons -->
+        <td>
+            <form th:action="@{'/quizzes/update/' + ${quiz.id}}" method="get">
+                <button type="submit" class="update-btn">Update</button>
+            </form>
+            <a th:href="@{/quizzes/delete/{id}(id=${quiz.id})}" class="delete-btn"
+               onclick="return confirmDelete('Are you sure you want to Delete this Quiz ?')">
+                Delete
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Add a link to go back to the Add Student form -->
+<a th:href="@{/quizzes/add}">Add New Quiz</a>
+
+<footer>
+    <p>Contact me:</p>
+    <div class="connect-icons">
+        <a href="https://www.linkedin.com/in/amr-fawzi-a9024a2a2/" target="_blank">LinkedIn</a>
+        <a href="https://www.facebook.com/amrfawzi182000" target="_blank">Facebook</a>
+        <a href="https://api.whatsapp.com/send?phone=01092069449" target="_blank">WhatsApp</a>
+        <a href="mailto:amrfawzi182000@gmail.com">Email</a>
+    </div>
+
+    <div class="details">
+        <p>Location: Cairo</p>
+        <p>Email: amrfawzi182000@gmail.com</p>
+        <p>Phone: 01092069449</p>
+    </div>
+</footer>
+
+
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function confirmDelete(quizTitle) {
+        return confirm('Are you sure you want to delete ' + quizTitle + '?');
+    }
+    /*]]>*/
+</script>
+
+</body>
+</html>
